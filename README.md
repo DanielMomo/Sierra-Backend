@@ -1,42 +1,110 @@
 # Sierra-Backend
 Sierra Backend Screening
 
-Exercise Overview:
-You are tasked with creating a simple RESTful API using TypeScript and Node.js. This API will manage a small database of real estate listings, enabling users to add a new listing, retrieve all listings, and delete a listing.
-Technology Stack:
-TypeScript
-Node.js
-Express.js (or any similar framework you're comfortable with)
-Exercise Breakdown:
+## Real Estate Listing API
 
-## Setup ##
-Initialize a new Node.js project by creating a package.json file. You can do this by running `npm init -y` in your terminal.
-Install the necessary packages. You'll at least need typescript, express, and @types/express. Install these by running `npm install typescript express @types/express`.
-Setup TypeScript for the project. Create a tsconfig.json file by running tsc --init and adjust the configurations if needed for your project setup.
-## Define the Data Model ##
-Define a TypeScript interface for a real estate listing. In your main working file (e.g., app.ts), define an interface named Listing with the following properties:
-`id`: a unique identifier for the listing (string)
-`title`: the title of the real estate listing (string)
-`price`: the price of the listing (number)
-`description`: a brief description of the listing (string)
-## Implement the API Endpoints ##
-#### Add a New Listing: ####
-- Create a `POST` endpoint `/listings` that allows users to add a new listing. This endpoint should accept JSON data matching the Listing interface and add it to an in-memory store (e.g., an array).
-#### Retrieve All Listings: ####
-- Create a `GET` endpoint `/listings` that retrieves all current listings from the in-memory store.
-#### Delete a Listing: ####
-- Create a `DELETE` endpoint `/listings/:id` where `:id` is the unique identifier of the listing to be deleted. This endpoint should remove the specified listing from the in-memory store.
+This is a simple Express API for managing real estate listings, built with TypeScript. The API provides endpoints to add new listings, retrieve all listings, and delete a listing.
 
-## Testing ##
-Demonstrate the functionality of your API. You can use any API testing tool like Postman or a simple curl command in your terminal. Ensure you can add a listing, retrieve all listings, and delete a listing successfully.
-If you prefer writing a quick test script instead of using a tool, that's also acceptable. Ensure your script tests all three functionalities.
-Instructions for the Candidate:
-You will be evaluated based on code quality, adherence to the exercise requirements, and your approach to solving the task.
-Please think aloud as you work through the problem. Explain your reasoning and the steps you're taking.
-You may use online resources for syntax references or to troubleshoot issues, but ensure the logic and implementation are your own.
-Focus on the core functionality. If time permits, you can refine your solution, but it's more important to have a working API that meets the basic requirements.
-After completing the exercise, be prepared to walk through your code, discuss your design choices, and possibly extend the functionality if asked.
+Installation
 
-Submission Requirements:
-* Follow GitHub repository structure best practices.
-* Include a README.md with project instructions and overview.
+Clone the repository:
+
+    
+```bash
+git clone https://github.com/DanielMomo/Sierra-Backend.git
+cd sierra-backend
+```
+
+Install the dependencies:
+
+```bash
+npm install
+```
+
+Compile the TypeScript files:
+
+```bash
+npm run build
+```
+Usage
+
+To start the server in development mode using ts-node:
+
+```bash
+npm start
+```
+
+The server will run on http://localhost:3000.
+API Endpoints
+Add a New Listing
+
+    URL: /listings
+    Method: POST
+    Body: JSON object matching the Listing interface
+    Response:
+        201 Created with the newly created listing object
+        400 Bad Request if required fields are missing or invalid
+
+Example:
+
+```bash
+curl -X POST http://localhost:3000/listings -H "Content-Type: application/json" -d '{
+  "title": "Modern Apartment",
+  "price": 150000,
+  "description": "A modern apartment in the city center"
+}'
+```
+
+Retrieve All Listings
+
+    URL: /listings
+    Method: GET
+    Response:
+        200 OK with an array of all listings
+
+Example:
+
+```bash
+curl http://localhost:3000/listings
+```
+
+Delete a Listing
+
+    URL: /listings/:id
+    Method: DELETE
+    Response:
+        204 No Content if the listing is successfully deleted
+        404 Not Found if the listing does not exist
+
+Example:
+
+```bash
+curl -X DELETE http://localhost:3000/listings/<listing-id> 
+```
+
+## Testing
+
+To run the tests, use the following command:
+
+```bash
+npm test
+```
+
+Project Structure
+
+```lua
+project-root/
+├── src/
+│   ├── routes/
+│   │   └── listings.ts
+│   ├── app.ts
+│   ├── server.ts
+│   └── app.test.ts
+├── package.json
+├── tsconfig.json
+└── jest.config.js
+```
+    src/routes/listings.ts: Contains the routes for managing listings.
+    src/app.ts: Configures the Express application.
+    src/server.ts: Starts the Express server.
+    src/app.test.ts: Contains the test cases for the API endpoints.
